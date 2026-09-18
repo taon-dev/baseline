@@ -1,5 +1,6 @@
 {
   "type": "isomorphic-lib",
+  "overrideNpmName": "@taon-dev/baseline",
   "packageJsonOverride": {
     "author": "Dfilipiak",
     "description": "Description for baseline. Hello world!",
