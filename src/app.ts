@@ -199,10 +199,11 @@ export const BaselineServerRoutes: ServerRoute[] = [
   },
 ];
 export const BaselineClientRoutes: Routes = [
-  // {
-  //   path: '',
-  //   component: BaselineApp,
-  // },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./app/sample-app/sample-app.routes').then(m => m.SampleAppRoutes),
+  },
   {
     path: 'backoffice',
     outlet: TaonBaselineBackofficeOutletName,
