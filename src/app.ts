@@ -43,9 +43,14 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { provideServerRendering, withRoutes } from '@angular/ssr';
 import { RenderMode, ServerRoute } from '@angular/ssr';
 import Aura from '@primeng/themes/aura'; // @browser
+import {
+  TaonBaselineAbstractContext,
+  TaonBaselineBackofficeOutletName,
+} from '@taon-dev/baseline/src';
 import { Translation, TranslationManager } from '@taon-dev/i18n/src';
 // TranslationManager.globalDefautlLanguageOverride = 'pl-PL';
 import { TranslateDirective } from '@taon-dev/i18n/src'; // @browser
+import { TaonDraggableButtonPanelComponent } from '@taon-dev/ui/src'; // @browser
 import { providePrimeNG } from 'primeng/config'; // @browser
 import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
 import {
@@ -105,118 +110,27 @@ const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP, {
     RouterModule,
     TranslateDirective,
     TaonAdminModeConfigurationComponent,
+    TaonDraggableButtonPanelComponent,
     JsonPipe,
   ],
-  // // Uncomment to have simples template
-  // template: `
-  //   @if (itemsLoaded()) {
-  //     <router-outlet />
-  //   }
-  // `,
   template: `
-    <taon-admin-mode-configuration>
-      @if (itemsLoaded()) {
-        @if (navItems.length > 0) {
-          <nav
-            mat-tab-nav-bar
-            class="shadow-1"
-            [tabPanel]="tabPanel">
-            @for (item of navItems; track item.path) {
-              <a
-                mat-tab-link
-                href="javascript:void(0)"
-                [style.text-decoration]="
-                  (activePath === item.path && !forceShowBaseRootApp) ||
-                  ('/' === item.path && forceShowBaseRootApp)
-                    ? 'underline'
-                    : 'none'
-                "
-                (click)="navigateTo(item)">
-                @if (item.path === '/') {
-                  <mat-icon
-                    aria-hidden="false"
-                    aria-label="Example home icon"
-                    fontIcon="home"></mat-icon>
-                } @else {
-                  {{ item.label }}
-                }
-              </a>
-            }
-            <a
-              mat-tab-link
-              href="javascript:void(0)"
-              (click)="openSettings(200, 200)">
-              <mat-icon>settings</mat-icon>
-            </a>
-          </nav>
+    @if (itemsLoaded()) {
+      <taon-draggable-button-panel
+        title="Taon Admin"
+        [outlet]="outlet"
+        [basePath]="basePath">
+        <router-outlet [name]="outlet" />
+      </taon-draggable-button-panel>
 
-          <mat-tab-nav-panel #tabPanel>
-            @if (!forceShowBaseRootApp) {
-              <router-outlet />
-            }
-          </mat-tab-nav-panel>
-        }
-        @if (navItems.length === 0) {
-          <nav class="shadow-1 w-full p-2">
-            <button
-              mat-icon-button
-              (click)="openDialog(200, 200)">
-              <mat-icon>settings</mat-icon>
-            </button>
-          </nav>
-        }
+      <router-outlet></router-outlet>
 
-        @if (navItems.length === 0 || forceShowBaseRootApp) {
-          <mat-card class="m-2">
-            <mat-card-content>
-              <h3>{{ t.gettext('Basic app info') }}</h3>
-              {{ t.gettext('Name') }}: baseline<br />
-              {{ t.gettext('Angular version:') }} {{ angularVersion }}<br />
-              {{ t.gettext('Taon backend:') }} {{ taonMode }}<br />
-            </mat-card-content>
-          </mat-card>
-
-          <mat-card class="m-2">
-            <mat-card-content>
-              <h3>{{ exampleUserTitle() }}</h3>
-              <ul>
-                @for (user of users(); track user.id) {
-                  <li class="p-1">
-                    {{ user | json }}
-                    <button
-                      mat-flat-button
-                      (click)="deleteUser(user)">
-                      <mat-icon>delete user</mat-icon>
-                    </button>
-                  </li>
-                }
-              </ul>
-              <br />
-              <button
-                class="ml-1"
-                matButton="outlined"
-                (click)="addUser()">
-                {{ t.gettext('Add new example user with random name') }}
-              </button>
-            </mat-card-content>
-          </mat-card>
-
-          <mat-card class="m-2">
-            <mat-card-content>
-              <h3 translate>Example hello world from backend API:</h3>
-              {{ t.gettext('hello world from backend:') }}
-              <strong>{{ hello$ | async }}</strong>
-            </mat-card-content>
-          </mat-card>
-        }
-        <footer
-          class="text-center p-4 w-full select-none"
-          (click)="taonAdminService.enableDeveloperIf5Timetap()">
-          {{ t.gettext('Copyright') }} <strong>baseline</strong>
-          {{ year }}
-        </footer>
-      }
-    </taon-admin-mode-configuration>
+      <footer
+        class="text-center p-4 w-full select-none"
+        (click)="taonAdminService.enableDeveloperIf5Timetap()">
+        {{ t.gettext('Copyright') }} <strong>baseline</strong>
+        {{ year }}
+      </footer>
+    }
   `,
 })
 export class BaselineApp implements OnInit {
@@ -233,8 +147,6 @@ export class BaselineApp implements OnInit {
 
   activatedRoute = inject(ActivatedRoute);
 
-  userApiService = inject(UserApiService);
-
   router = inject(Router);
 
   itemsLoaded = signal(false);
@@ -245,26 +157,11 @@ export class BaselineApp implements OnInit {
 
   angularVersion = VERSION.full;
 
+  outlet = TaonBaselineBackofficeOutletName;
+
   forceShowBaseRootApp = false;
 
-  private refresh = new BehaviorSubject<void>(undefined);
-
-  get activePath(): string {
-    return globalThis?.location.pathname?.split('?')[0];
-  }
-
-  navItems =
-    BaselineClientRoutes.length <= 1
-      ? []
-      : BaselineClientRoutes.filter(r => r.path !== undefined).map(r => ({
-          path: r.path === '' ? '/' : `/${r.path}`,
-          label: r.path === '' ? 'Home' : `${r.path}`,
-        }));
-
-  readonly hello$ = this.userApiService.userController
-    .helloWorld()
-    .request()
-    .observable.pipe(map(r => r.body.text));
+  basePath!: string;
 
   openDialog(
     enterAnimationDuration: string | number,
@@ -278,6 +175,9 @@ export class BaselineApp implements OnInit {
   }
 
   ngOnInit(): void {
+    this.basePath = BaselineClientRoutes.find(
+      c => c.outlet === TaonBaselineBackofficeOutletName,
+    )?.path!;
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     console.log(globalThis?.location.pathname);
@@ -286,66 +186,8 @@ export class BaselineApp implements OnInit {
       this.itemsLoaded.set(true);
     });
   }
-
-  readonly users = toSignal(
-    this.refresh.pipe(
-      switchMap(() =>
-        this.userApiService.userController
-          .getAll()
-          .request()
-          .observable.pipe(map(r => r.body.json)),
-      ),
-    ),
-    { initialValue: [] },
-  );
-
-  async deleteUser(userToDelete: User): Promise<void> {
-    await this.userApiService.userController
-      .deleteById(userToDelete.id)
-      .request();
-    this.refresh.next();
-  }
-
-  async addUser(): Promise<void> {
-    const newUser = new User();
-    newUser.name = `user-${Math.floor(Math.random() * 1000)}`;
-    await this.userApiService.userController.save(newUser).request();
-    this.refresh.next();
-  }
-
-  navigateTo(item: { path: string; label: string }): void {
-    if (item.path === '/') {
-      if (this.forceShowBaseRootApp) {
-        return;
-      }
-      this.forceShowBaseRootApp = true;
-      return;
-    }
-    this.forceShowBaseRootApp = false;
-    void this.router.navigateByUrl(item.path);
-  }
 }
 //#endregion
-//#endregion
-
-//#region  baseline api service
-
-//#region @browser
-@Injectable({
-  providedIn: 'root',
-})
-export class UserApiService extends TaonBaseAngularService {
-  userController = this.injectController(UserController);
-
-  getAll(): Observable<User[]> {
-    return this.userController
-      .getAll()
-      .request()
-      .observable.pipe(map(r => r.body.json));
-  }
-}
-//#endregion
-
 //#endregion
 
 //#region  baseline routes
@@ -357,24 +199,24 @@ export const BaselineServerRoutes: ServerRoute[] = [
   },
 ];
 export const BaselineClientRoutes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: () => {
-      if (BaselineClientRoutes.length === 1) {
-        return '';
-      }
-      return BaselineClientRoutes.find(r => r.path !== '')!.path!;
-    },
-  },
-  // PUT ALL ROUTES HERE
-  // @placeholder-for-routes
-
-  // uncomment this to have NOT FOUND route
   // {
-  //   path: '**',
-  //   component: TaonNotFoundComponent,
+  //   path: '',
+  //   component: BaselineApp,
   // },
+  {
+    path: 'backoffice',
+    outlet: TaonBaselineBackofficeOutletName,
+    providers: [
+      {
+        provide: TAON_CONTEXT,
+        useFactory: () => BaselineContext,
+      },
+    ],
+    loadChildren: () =>
+      import('@taon-dev/baseline/src').then(
+        m => m.TaonBaselineBackofficeRoutes,
+      ),
+  },
 ];
 //#endregion
 //#endregion
@@ -425,88 +267,11 @@ export const BaselineConfig = mergeApplicationConfig(
 //#endregion
 //#endregion
 
-//#region  baseline entity
-@TaonEntity({ className: 'User' })
-class User extends TaonBaseAbstractEntity {
-  //#region @websql
-  @StringColumn()
-  //#endregion
-  name?: string;
-
-  getHello(): string {
-    return `hello ${this.name}`;
-  }
-}
-//#endregion
-
-//#region  baseline controller
-@TaonController({ className: 'UserController' })
-class UserController extends TaonBaseCrudController<User> {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  entityClassResolveFn = () => User;
-
-  @GET()
-  helloWorld(): Taon.Response<string> {
-    //#region @websqlFunc
-    return async (req, res) => 'hello world';
-    //#endregion
-  }
-
-  @GET()
-  getOsPlatform(): Taon.Response<string> {
-    //#region @websqlFunc
-    return async (req, res) => {
-      //#region @backend
-      return os.platform(); // for normal nodejs backend return real value
-      //#endregion
-
-      return 'no-platform-inside-browser-and-websql-mode';
-    };
-    //#endregion
-  }
-}
-//#endregion
-
-//#region  baseline migration
-
-//#region @websql
-@TaonMigration({
-  className: 'UserMigration',
-})
-class UserMigration extends TaonBaseMigration {
-  userController = this.injectRepo(User);
-
-  async up(): Promise<any> {
-    const superAdmin = new User();
-    superAdmin.name = 'super-admin';
-    await this.userController.save(superAdmin);
-  }
-}
-//#endregion
-
-//#endregion
-
 //#region  baseline context
 var BaselineContext = Taon.createContext(() => ({
   ...HOST_CONFIG['BaselineContext'],
-  contexts: { TaonBaseContext },
+  contexts: { TaonBaseContext, TaonBaselineAbstractContext },
 
-  //#region @websql
-  /**
-   * In production use specyfic for this context name
-   * generated migration object from  ./migrations/index.ts.
-   */
-  migrations: {
-    UserMigration,
-  },
-  //#endregion
-
-  controllers: {
-    UserController,
-  },
-  entities: {
-    User,
-  },
   database: true,
   disabledRealtime: true,
 }));
@@ -527,27 +292,6 @@ export const BaselineStartFunction = async (
   //#endregion
 
   await BaselineContext.initialize(startParams);
-
-  //#region initialize auto generated active contexts
-  const autoGeneratedActiveContextsForApp: TaonContext[] = [
-    // @placeholder-for-contexts-init
-  ];
-
-  const priorityContexts = [
-    // put here manual priority for contexts if needed
-  ];
-
-  const activeContextsForApp: TaonContext[] = [
-    ...priorityContexts,
-    ...autoGeneratedActiveContextsForApp.filter(
-      c => !priorityContexts.includes(c),
-    ),
-  ];
-
-  for (const activeContext of activeContextsForApp) {
-    await activeContext.initialize(startParams);
-  }
-  //#endregion
 
   //#region @backend
   //#region @esmRemove
