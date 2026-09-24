@@ -4,10 +4,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/app.ts:139
+#: src/app.ts:161
 msgid "Example users from backend API:"
 msgstr "Przykładowi użytkownicy z serwera API"
 
-#: src/app.ts:130
+#: src/app.ts:152
 msgid "Copyright"
 msgstr "Wszelkie prawa zastrzeżone"

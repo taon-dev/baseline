@@ -50,6 +50,7 @@ import {
 import { Translation, TranslationManager } from '@taon-dev/i18n/src';
 // TranslationManager.globalDefautlLanguageOverride = 'pl-PL';
 import { TranslateDirective } from '@taon-dev/i18n/src'; // @browser
+import { TaonSessionButtonComponent } from '@taon-dev/session/src'; // @browser
 import { TaonDraggableButtonPanelComponent } from '@taon-dev/ui/src'; // @browser
 import { providePrimeNG } from 'primeng/config'; // @browser
 import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';
@@ -75,6 +76,8 @@ import {
   TaonAdminModeConfigurationComponent,
   TaonNotFoundComponent,
   TaonSettingsComponent,
+  TaonSimpleLayoutComponent,
+  TaonSimpleLayoutNavItem,
   TaonThemeComponent,
   TaonThemeService,
 } from 'taon-ui/src'; // @browser
@@ -109,20 +112,34 @@ const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP, {
     MatTabsModule,
     RouterModule,
     TranslateDirective,
-    TaonAdminModeConfigurationComponent,
     TaonDraggableButtonPanelComponent,
+    TaonSessionButtonComponent,
+    TaonSimpleLayoutComponent,
     JsonPipe,
   ],
   template: `
     @if (itemsLoaded()) {
-      <taon-draggable-button-panel
-        title="Taon Admin"
-        [outlet]="outlet"
-        [basePath]="basePath">
-        <router-outlet [name]="outlet" />
-      </taon-draggable-button-panel>
+      <taon-simple-layout [navItems]="navItems">
+        <!-- #region header -->
+        <header header>
+          <h1 class="ml-4 text-blue-200   text-4xl">Taon Baseline</h1>
+        </header>
 
-      <router-outlet></router-outlet>
+        <div
+          class="mr-2 flex items-center justify-center"
+          buttons>
+          <taon-draggable-button-panel
+            title="Taon Admin"
+            [outlet]="outlet"
+            [basePath]="basePath">
+            <router-outlet [name]="outlet" />
+          </taon-draggable-button-panel>
+
+          <taon-session-button />
+        </div>
+
+        <router-outlet></router-outlet>
+      </taon-simple-layout>
 
       <footer
         class="text-center p-4 w-full select-none"
@@ -162,6 +179,17 @@ export class BaselineApp implements OnInit {
   forceShowBaseRootApp = false;
 
   basePath!: string;
+
+  navItems: TaonSimpleLayoutNavItem[] = [
+    {
+      label: 'Page 1',
+      path: 'page1',
+    },
+    {
+      label: 'Page 2',
+      path: 'page2',
+    },
+  ];
 
   openDialog(
     enterAnimationDuration: string | number,
@@ -203,6 +231,16 @@ export const BaselineClientRoutes: Routes = [
     path: '',
     loadChildren: () =>
       import('./app/sample-app/sample-app.routes').then(m => m.SampleAppRoutes),
+  },
+  {
+    path: 'page1',
+    loadChildren: () =>
+      import('./app/page1/page1.routes').then(m => m.Page1Routes),
+  },
+  {
+    path: 'page2',
+    loadChildren: () =>
+      import('./app/page2/page2.routes').then(m => m.Page2Routes),
   },
   {
     path: 'backoffice',

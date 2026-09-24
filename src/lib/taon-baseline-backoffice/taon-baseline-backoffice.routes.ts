@@ -13,6 +13,15 @@ export const TaonBaselineBackofficeRoutes: Routes = [
 
     children: [
       adminLazyRoute({
+        path: 'sudo',
+        menuItem: 'Sudo',
+        color: 'red',
+        icon: 'supervisor_account',
+        expandable: false,
+        loader: () =>
+          import('@taon-dev/sudo/src').then(m => m.TaonSudoBackofficeRoutes),
+      }),
+      adminLazyRoute({
         path: 'users',
         menuItem: 'Users',
         icon: 'manage_accounts',
