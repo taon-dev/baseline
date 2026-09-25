@@ -42,6 +42,16 @@ export const TaonBaselineBackofficeRoutes: Routes = [
           ),
       }),
       adminLazyRoute({
+        path: 'authorization',
+        menuItem: 'Authorization',
+        icon: 'apps',
+        expandable: true,
+        loader: () =>
+          import('@taon-dev/session/src').then(
+            m => m.TaonAuthorizationBackofficeRoutes,
+          ),
+      }),
+      adminLazyRoute({
         path: 'emails',
         menuItem: 'Emails',
         expandable: false,
