@@ -43,14 +43,12 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { provideServerRendering, withRoutes } from '@angular/ssr';
 import { RenderMode, ServerRoute } from '@angular/ssr';
 import Aura from '@primeng/themes/aura'; // @browser
-import {
-  TaonBaselineAbstractContext,
-  TaonBaselineBackofficeOutletName,
-} from '@taon-dev/baseline/src';
+import { TaonBaselineAbstractContext } from '@taon-dev/baseline/src';
 import { Translation, TranslationManager } from '@taon-dev/i18n/src';
 // TranslationManager.globalDefautlLanguageOverride = 'pl-PL';
 import { TranslateDirective } from '@taon-dev/i18n/src'; // @browser
 import { TaonSessionButtonComponent } from '@taon-dev/session/src'; // @browser
+import { TaonBaselineBackofficeOutletName } from '@taon-dev/ui/src'; // @browser
 import { TaonDraggableButtonPanelComponent } from '@taon-dev/ui/src'; // @browser
 import { providePrimeNG } from 'primeng/config'; // @browser
 import { BehaviorSubject, Observable, map, switchMap } from 'rxjs';

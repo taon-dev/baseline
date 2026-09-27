@@ -4,8 +4,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ENV_ANGULAR_NODE_APP_WEBSITE_TITLE } from '@taon-dev/baseline/src';
 import { TaonAdminLayoutComponent } from '@taon-dev/ui/src';
+import { TaonBaselineBackofficeOutletName } from '@taon-dev/ui/src';
 
-import { TaonBaselineBackofficeOutletName } from './taon-baseline-backoffice.models';
 import { TaonBaselineBackofficeRoutes } from './taon-baseline-backoffice.routes';
 //#endregion
 
