@@ -65,29 +65,9 @@ export const TaonBaselineBackofficeRoutes: Routes = [
         path: 'cms',
         menuItem: 'CMS',
         expandable: true,
-        icon: 'apps',
+        icon: 'content_copy',
         loader: () =>
           import('@taon-dev/cms/src').then(m => m.TaonCmsBackofficeRoutes),
-      }),
-      adminLazyRoute({
-        path: 'e-commerce',
-        menuItem: 'E-commerce',
-        expandable: true,
-        icon: 'payments',
-        loader: () =>
-          import('@taon-dev/e-commerce/src').then(
-            m => m.TaonECommerceBackofficeRoutes,
-          ),
-      }),
-      adminLazyRoute({
-        path: 'analytics',
-        menuItem: 'Analytics',
-        expandable: true,
-        icon: 'analytics',
-        loader: () =>
-          import('@taon-dev/analytics/src').then(
-            m => m.TaonAnalyticsBackofficeRoutes,
-          ),
       }),
     ],
   },
