@@ -22,6 +22,48 @@ export const TaonBaselineBackofficeRoutes: Routes = [
           import('@taon-dev/sudo/src').then(m => m.TaonSudoBackofficeRoutes),
       }),
       adminLazyRoute({
+        path: 'e-commerce',
+        menuItem: 'E-commerce',
+        expandable: true,
+        icon: 'sell',
+        loader: () =>
+          import('@taon-dev/e-commerce/src').then(
+            m => m.TaonECommerceBackofficeRoutes,
+          ),
+      }),
+
+      adminLazyRoute({
+        path: 'analytics',
+        menuItem: 'Analytics',
+        expandable: true,
+        icon: 'analytics',
+        loader: () =>
+          import('@taon-dev/analytics/src').then(
+            m => m.TaonAnalyticsBackofficeRoutes,
+          ),
+      }),
+
+      adminLazyRoute({
+        path: 'seo',
+        menuItem: 'SEO',
+        expandable: true,
+        icon: 'query_stats',
+        loader: () =>
+          import('@taon-dev/seo/src').then(m => m.TaonSeoBackofficeRoutes),
+      }),
+
+      adminLazyRoute({
+        path: 'marketing',
+        menuItem: 'Marketing',
+        expandable: true,
+        icon: 'campaign',
+        loader: () =>
+          import('@taon-dev/marketing/src').then(
+            m => m.TaonMarketingBackofficeRoutes,
+          ),
+      }),
+
+      adminLazyRoute({
         path: 'users',
         menuItem: 'Users',
         icon: 'manage_accounts',
