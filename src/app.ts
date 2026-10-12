@@ -71,7 +71,6 @@ import {
 import { TaonAdminService, TaonAdmin } from 'taon/src'; // @browser
 import { TaonStor } from 'taon-storage/src';
 import {
-  TaonAdminModeConfigurationComponent,
   TaonNotFoundComponent,
   TaonSettingsComponent,
   TaonSimpleLayoutComponent,
