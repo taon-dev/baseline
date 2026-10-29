@@ -6,6 +6,7 @@ import { TaonEmailsAbstractContext } from '@taon-dev/emails/src';
 import { TaonMarketingAbstractContext } from '@taon-dev/marketing/src';
 import { TaonSeoAbstractContext } from '@taon-dev/seo/src';
 import { TaonSessionAbstractContext } from '@taon-dev/session/src';
+import { TaonSudoAbstractContext } from '@taon-dev/sudo/src';
 import { createContext, TaonBaseContext } from 'taon/src';
 
 //#endregion
@@ -16,6 +17,7 @@ export const TaonBaselineAbstractContext = createContext(() => ({
   contexts: {
     TaonBaseContext,
     TaonSessionAbstractContext,
+    TaonSudoAbstractContext,
     TaonEmailsAbstractContext,
     TaonCmsAbstractContext,
     TaonECommerceAbstractContext,
