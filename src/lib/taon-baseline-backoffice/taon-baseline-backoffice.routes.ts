@@ -1,7 +1,14 @@
 //#region imports
 import { Routes } from '@angular/router';
-import { adminLazyRoute } from '@taon-dev/ui/src';
+import { Translation } from '@taon-dev/i18n/src';
+import { TaonAuthContextEntity } from '@taon-dev/session/src';
+import { adminLazyRoute as adminLazyRouteBase } from '@taon-dev/ui/src';
+import { Taon } from 'taon/src';
 //#endregion
+
+const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP);
+
+const adminLazyRoute = adminLazyRouteBase<TaonAuthContextEntity>;
 
 export const TaonBaselineBackofficeRoutes: Routes = [
   {
@@ -12,7 +19,23 @@ export const TaonBaselineBackofficeRoutes: Routes = [
       ),
 
     children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'welcome',
+      },
       adminLazyRoute({
+        path: 'welcome',
+        menuItem: t.signal.gettext('Welcome'),
+        color: 'green',
+        icon: 'waving_hand',
+        expandable: false,
+        loader: () =>
+          import('@taon-dev/ui/src').then(m => m.TaonAdminWelcomeRoutes),
+      }),
+      adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.isLocalhostBackend,
         path: 'sudo',
         menuItem: 'Sudo',
         color: 'red',
@@ -22,6 +45,18 @@ export const TaonBaselineBackofficeRoutes: Routes = [
           import('@taon-dev/sudo/src').then(m => m.TaonSudoBackofficeRoutes),
       }),
       adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.hasAccess?.toManageCms,
+        path: 'cms',
+        menuItem: 'CMS',
+        expandable: true,
+        icon: 'content_copy',
+        loader: () =>
+          import('@taon-dev/cms/src').then(m => m.TaonCmsBackofficeRoutes),
+      }),
+      adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.hasAccess?.toManagerEcommerce,
         path: 'e-commerce',
         menuItem: 'E-commerce',
         expandable: true,
@@ -33,6 +68,8 @@ export const TaonBaselineBackofficeRoutes: Routes = [
       }),
 
       adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.hasAccess?.toManageAnalytics,
         path: 'analytics',
         menuItem: 'Analytics',
         expandable: true,
@@ -44,6 +81,8 @@ export const TaonBaselineBackofficeRoutes: Routes = [
       }),
 
       adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.hasAccess?.toManageSeo,
         path: 'seo',
         menuItem: 'SEO',
         expandable: true,
@@ -53,6 +92,8 @@ export const TaonBaselineBackofficeRoutes: Routes = [
       }),
 
       adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.hasAccess?.toManageMarketing,
         path: 'marketing',
         menuItem: 'Marketing',
         expandable: true,
@@ -64,6 +105,8 @@ export const TaonBaselineBackofficeRoutes: Routes = [
       }),
 
       adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.hasAccess?.toManageUsers,
         path: 'users',
         menuItem: 'Users',
         icon: 'manage_accounts',
@@ -74,6 +117,8 @@ export const TaonBaselineBackofficeRoutes: Routes = [
           ),
       }),
       adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.hasAccess?.toManageSessions,
         path: 'session',
         menuItem: 'Sessions',
         expandable: false,
@@ -84,6 +129,8 @@ export const TaonBaselineBackofficeRoutes: Routes = [
           ),
       }),
       adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.hasAccess?.toManageAuthorization,
         path: 'authorization',
         menuItem: 'Authorization',
         icon: 'apps',
@@ -94,6 +141,8 @@ export const TaonBaselineBackofficeRoutes: Routes = [
           ),
       }),
       adminLazyRoute({
+        isVisible: ({ context }) =>
+          context?.isSuperUser || context?.hasAccess?.toManageEmails,
         path: 'emails',
         menuItem: 'Emails',
         expandable: false,
@@ -102,14 +151,6 @@ export const TaonBaselineBackofficeRoutes: Routes = [
           import('@taon-dev/emails/src').then(
             m => m.TaonEmailsBackofficeRoutes,
           ),
-      }),
-      adminLazyRoute({
-        path: 'cms',
-        menuItem: 'CMS',
-        expandable: true,
-        icon: 'content_copy',
-        loader: () =>
-          import('@taon-dev/cms/src').then(m => m.TaonCmsBackofficeRoutes),
       }),
     ],
   },
