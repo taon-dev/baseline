@@ -1,11 +1,12 @@
 //#region imports
-import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TaonAdminLayoutComponent } from '@taon-dev/ui/src';
+import {
+  TaonAdminContentFooterService,
+  TaonAdminLayoutComponent,
+} from '@taon-dev/ui/src';
 import { TaonBaselineBackofficeOutletName } from '@taon-dev/ui/src';
-
-import { ENV_ANGULAR_NODE_APP_WEBSITE_TITLE } from '../env'; // @notForNpm
 
 import { TaonBaselineBackofficeRoutes } from './taon-baseline-backoffice.routes';
 //#endregion
@@ -15,17 +16,11 @@ import { TaonBaselineBackofficeRoutes } from './taon-baseline-backoffice.routes'
   templateUrl: './taon-baseline-backoffice.component.html',
   styleUrls: ['./taon-baseline-backoffice.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AsyncPipe, RouterOutlet, TaonAdminLayoutComponent],
+  imports: [AsyncPipe, RouterOutlet, TaonAdminLayoutComponent, CommonModule],
 })
 export class TaonBaselineBackofficeComponent {
-  get titleFromEnv(): string {
-    //#region @notForNpm
-    return ENV_ANGULAR_NODE_APP_WEBSITE_TITLE;
-    //#endregion
-    return '';
-  }
+  taonAdminContentFooterService = inject(TaonAdminContentFooterService);
 
-  title = this.titleFromEnv || 'Application Title';
 
   get adminRoutes() {
     return TaonBaselineBackofficeRoutes[0].children;

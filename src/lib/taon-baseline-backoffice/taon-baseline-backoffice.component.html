@@ -5,12 +5,24 @@
   <div
     header
     class="flex h-16 items-center px-6">
-    <strong>{{ title }}</strong>
+    @if (taonAdminContentFooterService.appHeader()) {
+      <ng-container
+        [ngTemplateOutlet]="taonAdminContentFooterService.appHeader()" />
+    } @else {
+      <span> Application Title</span>
+    }
   </div>
 
   <div
     asideFooter
     class="text-xs text-gray-500">
-    Taon Admin v1.0
+    @if (taonAdminContentFooterService.appTopLeftTitleBar()) {
+      <ng-container
+        [ngTemplateOutlet]="
+          taonAdminContentFooterService.appTopLeftTitleBar()
+        " />
+    } @else {
+      <span> Taon Admin v1.0 </span>
+    }
   </div>
 </taon-admin-layout>
