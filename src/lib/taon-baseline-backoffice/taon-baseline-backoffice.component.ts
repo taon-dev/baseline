@@ -21,6 +21,21 @@ import { TaonBaselineBackofficeRoutes } from './taon-baseline-backoffice.routes'
 export class TaonBaselineBackofficeComponent {
   taonAdminContentFooterService = inject(TaonAdminContentFooterService);
 
+  appHeader() {
+    return this.taonAdminContentFooterService.appHeader();
+  }
+
+  appTopLeftTitleBar() {
+    return this.taonAdminContentFooterService.appTopLeftTitleBar();
+  }
+
+  appBottomLeftMenuFooter() {
+    return this.taonAdminContentFooterService.appBottomLeftMenuFooter()
+  }
+
+  currentTemplate() {
+    return this.taonAdminContentFooterService.currentTemplate();
+  }
 
   get adminRoutes() {
     return TaonBaselineBackofficeRoutes[0].children;

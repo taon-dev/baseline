@@ -5,9 +5,8 @@
   <div
     header
     class="flex h-16 items-center px-6">
-    @if (taonAdminContentFooterService.appHeader()) {
-      <ng-container
-        [ngTemplateOutlet]="taonAdminContentFooterService.appHeader()" />
+    @if (appHeader()) {
+      <ng-container [ngTemplateOutlet]="appHeader()" />
     } @else {
       <span> Application Title</span>
     }
@@ -16,13 +15,11 @@
   <div
     asideFooter
     class="text-xs text-gray-500">
-    @if (taonAdminContentFooterService.appTopLeftTitleBar()) {
-      <ng-container
-        [ngTemplateOutlet]="
-          taonAdminContentFooterService.appTopLeftTitleBar()
-        " />
+    @if (appBottomLeftMenuFooter()) {
+      <ng-container [ngTemplateOutlet]="appBottomLeftMenuFooter()" />
     } @else {
-      <span> Taon Admin v1.0 </span>
+      <span> Taon Admin v1.0</span>
     }
   </div>
+
 </taon-admin-layout>
