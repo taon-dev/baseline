@@ -145,38 +145,8 @@ const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP, {
     TaonSimpleLayoutComponent,
     JsonPipe,
   ],
-  template: `
-    @if (itemsLoaded()) {
-      <taon-simple-layout [navItems]="navItems">
-        <!-- #region header -->
-        <header header>
-          <h1 class="ml-4 text-blue-200   text-4xl">Taon Baseline</h1>
-        </header>
-
-        <div
-          class="mr-2 flex items-center justify-center"
-          buttons>
-          <taon-draggable-button-panel
-            title="Taon Admin"
-            [outlet]="outlet"
-            [basePath]="basePath">
-            <router-outlet [name]="outlet" />
-          </taon-draggable-button-panel>
-
-          <taon-session-button />
-        </div>
-
-        <router-outlet></router-outlet>
-      </taon-simple-layout>
-
-      <footer
-        class="text-center p-4 w-full select-none"
-        (click)="taonAdminService.enableDeveloperIf5Timetap()">
-        {{ t.gettext('Copyright') }} <strong>baseline</strong>
-        {{ year }}
-      </footer>
-    }
-  `,
+  templateUrl: './app.html',
+  styleUrl: './app.scss'
 })
 export class BaselineApp implements OnInit {
   t = t.for(this);

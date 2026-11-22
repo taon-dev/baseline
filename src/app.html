@@ -1,0 +1,42 @@
+@if (itemsLoaded()) {
+<taon-simple-layout [navItems]="navItems">
+  <!-- #region header -->
+  <header header>
+    <!-- <h1 class="ml-4 text-blue-200 text-4xl">Taon Baseline</h1> -->
+    <div class="flex flex-row">
+      <img
+        routerLink="/"
+        class="flex items-center justify-center rounded header-image-only-hamsters"
+        src="src/assets/shared/images/only-hamsters2.png"
+        style="height: 150px" />
+
+      <h1
+        class="ml-4 hidden items-center justify-center text-blue-200 md:flex text-5xl">
+        Only Hamsters
+      </h1>
+    </div>
+  </header>
+
+  <div
+    class="mr-2 flex items-center justify-center"
+    buttons>
+    <taon-draggable-button-panel
+      title="Taon Admin"
+      [outlet]="outlet"
+      [basePath]="basePath">
+      <router-outlet [name]="outlet" />
+    </taon-draggable-button-panel>
+
+    <taon-session-button />
+  </div>
+
+  <router-outlet></router-outlet>
+</taon-simple-layout>
+
+<footer
+  class="text-center p-4 w-full select-none"
+  (click)="taonAdminService.enableDeveloperIf5Timetap()">
+  {{ t.gettext('Copyright') }} <strong>baseline</strong>
+  {{ year }}
+</footer>
+}

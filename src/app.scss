@@ -1,0 +1,14 @@
+:host {
+
+  @media (max-width: 1268px) {
+    .header-image-only-hamsters {
+      height: 100px !important;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header-image-only-hamsters {
+      height: 50px !important;
+    }
+  }
+}
