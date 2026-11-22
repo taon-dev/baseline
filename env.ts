@@ -1,5 +1,12 @@
 import type { EnvOptions } from 'tnp/src';
 
+/**
+ * Use taon env:decode
+ *
+ * and default master password: taon
+ *
+ */
+
 const env: Partial<EnvOptions> = {
   website: {
     domain: 'baseline.example.domain.com',
