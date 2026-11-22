@@ -111,6 +111,7 @@ import {
   TaonSessionProviderDecorator,
 } from './app.decorators';
 import { HOST_CONFIG } from './app.hosts';
+import { AppService } from './app.service'; // @browser
 import { ENV_ANGULAR_NODE_APP_BUILD_PWA_DISABLE_SERVICE_WORKER } from './lib/env/env.angular-node-app';
 
 // @placeholder-for-imports
@@ -146,10 +147,12 @@ const t = Translation.for(Taon.__FILE_RELATIVE_PATH, Taon.LANG_IMPORT_MAP, {
     JsonPipe,
   ],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
 })
 export class BaselineApp implements OnInit {
   t = t.for(this);
+
+  appService = inject(AppService);
 
   exampleUserTitle = this.t.signal.gettext('Example users from backend API:');
 
@@ -188,6 +191,10 @@ export class BaselineApp implements OnInit {
       path: 'page2',
     },
   ];
+
+  setContext(context: TaonAuthContextEntityDecorator) {
+    this.appService.context.set(context);
+  }
 
   openDialog(
     enterAnimationDuration: string | number,

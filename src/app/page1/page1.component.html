@@ -1,4 +1,20 @@
-<router-outlet></router-outlet>
-<p>
-  page1 works!
-</p>
+<h3 class="md:hidden block">Witaj w strefie kursanta</h3>
+@if (isTaonCourseEnabled() === true) {
+  <taon-course-tabs>
+    <!--      privateCoursePostSlug="taon-p1-priv" -->
+    @if (isTaonP1CourseEnabled() === true) {
+      <taon-course
+        publicCoursePostSlug="taon-basic"
+        privateCoursePostSlug="taon-basic-priv"
+        [context]="context()" />
+    }
+    @if (isTaonP2CourseEnabled() === true) {
+      <taon-course
+        publicCoursePostSlug="taon-extended"
+        privateCoursePostSlug="taon-extended-priv"
+        [context]="context()" />
+    }
+  </taon-course-tabs>
+} @else {
+  <taon-under-construction />
+}

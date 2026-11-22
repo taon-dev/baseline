@@ -27,10 +27,14 @@
       <router-outlet [name]="outlet" />
     </taon-draggable-button-panel>
 
-    <taon-session-button />
+    <taon-session-button
+      [config]="config"
+      (context)="setContext($event)" />
   </div>
-
-  <router-outlet></router-outlet>
+  <div
+    class="mx-auto flex w-full max-w-[900px] flex-col rounded px-2 py-3 md:px-5">
+    <router-outlet></router-outlet>
+  </div>
 </taon-simple-layout>
 
 <footer
