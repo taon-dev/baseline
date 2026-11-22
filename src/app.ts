@@ -43,11 +43,31 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { provideServerRendering, withRoutes } from '@angular/ssr';
 import { RenderMode, ServerRoute } from '@angular/ssr';
 import Aura from '@primeng/themes/aura'; // @browser
+import { MIGRATIONS_CLASSES_FOR_TaonAnalyticsAbstractContext } from '@taon-dev/analytics/src';
 import { TaonBaselineAbstractContext } from '@taon-dev/baseline/src';
+import {
+  CmsContext_1792506757808_applicaitonHooks,
+  MIGRATIONS_CLASSES_FOR_TaonCmsAbstractContext,
+  TaonCmsContentProvider,
+} from '@taon-dev/cms/src';
+import {
+  MIGRATIONS_CLASSES_FOR_TaonECommerceAbstractContext,
+  TaonECommerceCartProvider,
+} from '@taon-dev/e-commerce/src';
 import { Translation, TranslationManager } from '@taon-dev/i18n/src';
 // TranslationManager.globalDefautlLanguageOverride = 'pl-PL';
 import { TranslateDirective } from '@taon-dev/i18n/src'; // @browser
+import { MIGRATIONS_CLASSES_FOR_TaonMarketingAbstractContext } from '@taon-dev/marketing/src';
+import { MIGRATIONS_CLASSES_FOR_TaonSeoAbstractContext } from '@taon-dev/seo/src';
+import {
+  MIGRATIONS_CLASSES_FOR_TaonSessionAbstractContext,
+  SessionContext_1791132517216_initial,
+  TaonAuthContextEntity,
+  TaonAuthContextRepository,
+  TaonSessionProvider,
+} from '@taon-dev/session/src';
 import { TaonSessionButtonComponent } from '@taon-dev/session/src'; // @browser
+import { MIGRATIONS_CLASSES_FOR_TaonSudoAbstractContext } from '@taon-dev/sudo/src';
 import { TaonBaselineBackofficeOutletName } from '@taon-dev/ui/src'; // @browser
 import { TaonDraggableButtonPanelComponent } from '@taon-dev/ui/src'; // @browser
 import { providePrimeNG } from 'primeng/config'; // @browser
@@ -67,6 +87,7 @@ import {
   TaonMigration,
   TaonBaseMigration,
   TaonContext,
+  ClassHelpers,
 } from 'taon/src';
 import { TaonAdminService, TaonAdmin } from 'taon/src'; // @browser
 import { TaonStor } from 'taon-storage/src';
@@ -80,8 +101,18 @@ import {
 } from 'taon-ui/src'; // @browser
 import { Utils, UtilsOs } from 'tnp-core/src';
 
+import {
+  CmsContext_1792506757808_applicaitonHooks_decorator,
+  SessionContext_1791132517217_initial_decorator,
+  TaonAuthContextEntityDecorator,
+  TaonAuthContextRepositoryDecorator,
+  TaonCmsContentProviderDecorator,
+  TaonECommerceCartProviderDecorator,
+  TaonSessionProviderDecorator,
+} from './app.decorators';
 import { HOST_CONFIG } from './app.hosts';
 import { ENV_ANGULAR_NODE_APP_BUILD_PWA_DISABLE_SERVICE_WORKER } from './lib/env/env.angular-node-app';
+
 // @placeholder-for-imports
 
 //#endregion
@@ -307,6 +338,37 @@ export const BaselineConfig = mergeApplicationConfig(
 var BaselineContext = Taon.createContext(() => ({
   ...HOST_CONFIG['BaselineContext'],
   contexts: { TaonBaseContext, TaonBaselineAbstractContext },
+  providers: {
+    [ClassHelpers.getName(TaonSessionProvider)]: TaonSessionProviderDecorator,
+    [ClassHelpers.getName(TaonCmsContentProvider)]:
+      TaonCmsContentProviderDecorator,
+    [ClassHelpers.getName(TaonECommerceCartProvider)]:
+      TaonECommerceCartProviderDecorator,
+  },
+  entities: {
+    [ClassHelpers.getName(TaonAuthContextEntity)]:
+      TaonAuthContextEntityDecorator,
+  },
+  repositories: {
+    [ClassHelpers.getName(TaonAuthContextRepository)]:
+      TaonAuthContextRepositoryDecorator,
+  },
+  migrations: {
+    ...MIGRATIONS_CLASSES_FOR_TaonSessionAbstractContext,
+    ...MIGRATIONS_CLASSES_FOR_TaonCmsAbstractContext,
+    ...MIGRATIONS_CLASSES_FOR_TaonECommerceAbstractContext,
+    ...MIGRATIONS_CLASSES_FOR_TaonAnalyticsAbstractContext,
+    ...MIGRATIONS_CLASSES_FOR_TaonMarketingAbstractContext,
+    ...MIGRATIONS_CLASSES_FOR_TaonSeoAbstractContext,
+    ...MIGRATIONS_CLASSES_FOR_TaonSudoAbstractContext,
+
+    // decorators
+    [ClassHelpers.getName(SessionContext_1791132517216_initial)]:
+      SessionContext_1791132517217_initial_decorator,
+    [ClassHelpers.getName(CmsContext_1792506757808_applicaitonHooks)]:
+      CmsContext_1792506757808_applicaitonHooks_decorator,
+    // ...MIGRATIONS_CLASSES_FOR_WwwMattbachataPl,
+  },
 
   database: true,
   disabledRealtime: true,
