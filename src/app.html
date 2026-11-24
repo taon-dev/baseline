@@ -1,4 +1,22 @@
 @if (itemsLoaded()) {
+
+<ng-template #headerCenterTemplate>
+  <span
+    class="inline-block w-2 h-2 rounded-full mr-2"
+    [class.bg-green-500]="context?.user"
+    [class.bg-red-500]="!context?.user">
+  </span>
+
+  @if (context?.user) { {{ t.gettext( 'Hello [[ username ]]', { username:
+  context.user.username, }, 'header-taon-admin' ) }} } @else {
+  <a
+    href="javascript:void(0)"
+    (click)="login()">
+    {{ t.gettext('Please login to use Taon Admin') }}</a
+  >
+  }
+</ng-template>
+
 <taon-simple-layout [navItems]="navItems">
   <!-- #region header -->
   <header header>
@@ -23,6 +41,8 @@
     <taon-draggable-button-panel
       title="Taon Admin"
       [outlet]="outlet"
+      [context]="context"
+      [headerCenterTemplate]="headerCenterTemplate"
       [basePath]="basePath">
       <router-outlet [name]="outlet" />
     </taon-draggable-button-panel>

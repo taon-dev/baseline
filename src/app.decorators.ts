@@ -150,18 +150,18 @@ export interface TaonSessionCoreAuthorization extends TaonSessionCoreAuthorizati
   createTable: false,
 })
 export class TaonAuthContextEntityDecorator extends TaonAuthContextEntityBase {
-  declare snapshoot: Partial<TaonAuthContextHasAccess>;
+  declare snapshoot: Partial<TaonAuthContextHasAccessDecorator>;
 
   // @ts-ignore
-  get hasAccess(): TaonAuthContextHasAccess {
+  get hasAccess(): TaonAuthContextHasAccessDecorator {
     return this.injectClass<
-      TaonAuthContextHasAccess,
+      TaonAuthContextHasAccessDecorator,
       [TaonAuthContextEntityDecorator]
-    >(TaonAuthContextHasAccess as any, this) as any;
+    >(TaonAuthContextHasAccessDecorator as any, this) as any;
   }
 }
 
-export class TaonAuthContextHasAccess extends TaonAuthContextHasAccessBase {
+export class TaonAuthContextHasAccessDecorator extends TaonAuthContextHasAccessBase {
   // @ts-ignore
   declare protected context: TaonAuthContextEntityDecorator;
 

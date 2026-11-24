@@ -16,14 +16,14 @@ const env: Partial<EnvOptions> = {
   config: {
     microsoftClientIdForLogin: '',
     turnstileSiteKey: '',
-    superUsers: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:TAW9ujNF1M9fkWSqHxHpew==:7eP+GjM3yPt54BvB:UX3194fhqGxxUn7kKzdBOrV8pnEVi8PqewFlLTB/mAeA/g==$$$TAON_ENCRYPTED_END$$$`,
-    alwaysAdministrators: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:cKzT0TlIKqfVAaR/loXyGg==:1lNDb2y9/QWlRPUU:bu7FT7xH37Ih4BS2d3kzaM4Ur48CBF3iMDI9qgYXdYeD3M8=$$$TAON_ENCRYPTED_END$$$`,
-    googleSecret: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:MObjaaoWw5HWxpgU1MKYaA==:ie7u4tmsIvThItlI:dqqmkGKEzqcvpHp4Jvb8jA==$$$TAON_ENCRYPTED_END$$$`,
+    superUsers: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:TR79AlZh5k15Lso7zNNYYQ==:wC/TMSe8ZyN28Upx:8F5D+6CQRpAUF7EFWV4+vmKNkFhbtwHCrFVJtWt1dhp3Mw==$$$TAON_ENCRYPTED_END$$$`,
+    alwaysAdministrators: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:5TinqbAJsfnQs7g3CLwJ3Q==:UcbQISQxRteu/12m:ckUeZGNHmAhjdlH/Mw80n8yQN3+A6vZSTl6VnUGddosmJw==$$$TAON_ENCRYPTED_END$$$`,
+    googleSecret: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:4moTiSx8jUAeRLb7dKOEAA==:jKZe0R0zvOebJkxA:3zKL5YYsExV2fiQ40pxd3A==$$$TAON_ENCRYPTED_END$$$`,
     googleClientId: '',
-    ACCESS_TOKEN_SECRET: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:rV8ofrDYmaYM/UTPi5tO2A==:oI0apYCxIxKgJIGy:woL28rhUzwYl+tm6nrBnzi9CFWGZBeqzje2Ty/Ruv2miL5r5/d3HRPlKCXEZ17mgvv0qKcTjDct7cDRhluTuTp8h5P0Wg2r6ifuvcF2ILbwjP5ptZq63q2spoA==$$$TAON_ENCRYPTED_END$$$`,
-    REFRESH_TOKEN_SECRET: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:99w/kZD08EgmslFXFq5+8Q==:vsizSz6MOCOhmi7W:1TftT+N9O3sNeyCctMNeRyS3JeAv4noHhRQZSlugMdSNS/enaoyG6xsjcYkne88MjTeGZun28tJ5nLv4x8MG1kbU+JRXxX4iQ0Iv9dubA25J020PaoQ=$$$TAON_ENCRYPTED_END$$$`,
-    STRIPE_SECRET_KEY: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:3epfXJDbKOidUfYx1snlgg==:gYKCW/m+kRqj+ey8:SDtmkn33fLdXSu+Lko3CSw==$$$TAON_ENCRYPTED_END$$$`,
-    STRIPE_WEBHOOK_KEY: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:Uzn8yxJ5bu4Y7Ijl3Ejv7w==:U0wTsjOlmgJJ5xc4:efdErhywkSBevR9Ct/J9Ig==$$$TAON_ENCRYPTED_END$$$`,
+    ACCESS_TOKEN_SECRET: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:HgX9eG+o513lkXe0u5Mmhg==:uUnKbqvlvEzxKnB1:8KpXJSuRPoS/3UnrY9rOuJxDACbjj/dwwAxnTMBCcBAoHPmmaAbvKNy1WekSssDwNhYeVji4sx8RDbckXwXek8wLRb/KWlJpuIpyLgRLoRqCiNM=$$$TAON_ENCRYPTED_END$$$`,
+    REFRESH_TOKEN_SECRET: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:DX8N1KlEi81sKFL4bGkRRQ==:ncVraiRjYkDmCsYM:r8N3NChvKxaol9e9d6viNJA+CSQwvf4vRMPQaT7ZdiFdfL2i24aOof2uReVczOx8UB1rlcflnS+/iU+n1V3dAUa1LhSYOHERFxNaYcA27hIq8AVr//A=$$$TAON_ENCRYPTED_END$$$`,
+    STRIPE_SECRET_KEY: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:FzmseWDkxt7yRuA/K4/FjQ==:BwG6YpDJ+L5m6wRp:NP0Yv/Mh+jbwJekzxBaOew==$$$TAON_ENCRYPTED_END$$$`,
+    STRIPE_WEBHOOK_KEY: () => `$$$TAON_ENCRYPTED_START$$$v1:600000:FQ6H+njbnTOWJsxG1swyIA==:QlLya9W0RO64oOMv:c8J08mGyiGXfOhBQ7W9LGw==$$$TAON_ENCRYPTED_END$$$`,
   },
   loading: {
     preAngularBootstrap: {

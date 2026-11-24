@@ -181,6 +181,8 @@ export class BaselineApp implements OnInit {
 
   basePath!: string;
 
+  public context: TaonAuthContextEntityDecorator;
+
   navItems: TaonSimpleLayoutNavItem[] = [
     {
       label: 'Page 1',
@@ -193,6 +195,7 @@ export class BaselineApp implements OnInit {
   ];
 
   setContext(context: TaonAuthContextEntityDecorator) {
+    this.context = context;
     this.appService.context.set(context);
   }
 
