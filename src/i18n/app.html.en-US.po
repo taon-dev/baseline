@@ -4,6 +4,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/app.html:43
+#: src/app.html:10
+msgctxt "header-taon-admin"
+msgid "Hello [[ username ]]"
+msgstr ""
+
+#: src/app.html:15
+msgid "Please login to use Taon Admin"
+msgstr ""
+
+#: src/app.html:63
 msgid "Copyright"
 msgstr ""
