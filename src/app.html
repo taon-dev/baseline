@@ -38,6 +38,7 @@
   <div
     class="mr-2 flex items-center justify-center"
     buttons>
+    @if(context?.hasAccess?.toViewTaonAdminButton) {
     <taon-draggable-button-panel
       title="Taon Admin"
       [outlet]="outlet"
@@ -46,6 +47,7 @@
       [basePath]="basePath">
       <router-outlet [name]="outlet" />
     </taon-draggable-button-panel>
+    }
 
     <taon-session-button
       [config]="config"
